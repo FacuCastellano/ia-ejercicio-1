@@ -1,0 +1,85 @@
+Below, I will provide you with a set of rules and the source code of a project for you to analyze.
+
+### SOURCE CODE ###
+Analyze and validate the content of the following files:
+
+##### ./requirements.txt #####
+```txt
+watchdog==6.0.0
+pypdf==6.1.0
+```
+
+##### ./docker-compose.yml #####
+```yml
+services:
+  pgvector:
+    image: pgvector/pgvector:pg16
+    container_name: postgres-pgvector
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=misuperpassword
+      - POSTGRES_DB=vectordb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # restart: unless-stopped
+
+  cloudbeaver:
+    image: dbeaver/cloudbeaver:25
+    container_name: dbeaver
+    ports:
+      - "8978:8978"
+    volumes:
+      - cloudbeaver_workspace:/opt/cloudbeaver/workspace
+    restart: unless-stopped
+    depends_on:
+      - pgvector
+
+volumes:
+  postgres_data:
+  cloudbeaver_workspace:
+```
+
+##### ./.mycontext-ignore #####
+```
+{
+  "names": [
+    "node_modules",
+    "logs",
+    ".vscode",
+    ".git",
+    ".DS_Store",
+    "ui",
+    "pyproject.toml",
+    "uv.lock",
+    "__pycache__",
+    "tmp",
+    "cloudbeaver_conf",
+    "package-lock.json",
+    "dist",
+    "build",
+    ".npm-venv",
+    ".venv",
+    "mycontext.egg-info",
+    "venv",
+    "collections",
+    "pdfs",
+    "examples"
+  ],
+  "patterns": [
+    "context_window_*.txt",
+    "*.egg-info"
+  ],
+  "extensions": [
+    ".pyc",
+    ".log",
+    ".swp",
+    ".env",
+    ".pdf",
+    ".py"
+  ]
+}
+
+```
+
